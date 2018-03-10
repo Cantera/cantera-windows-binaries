@@ -16,6 +16,9 @@ IF %PY_MAJ_VER% EQU 2 (
 :: Set the number of CPUs to use in building
 SET CPU_USE=2
 
+IF "%BUILD_MATLAB%"=="Y" (
+git clone https://cantera:%GIT_PW%@cantera.org/mw_headers.git
+)
 git clone https://github.com/Cantera/cantera.git
 cd cantera
 git checkout %CANTERA_TAG%
@@ -26,7 +29,12 @@ CALL scons clean
 :: Put important settings into cantera.conf for the build. Use VS 2015 to
 :: compile the interface.
 ECHO msvc_version='14.0' >> cantera.conf
+IF "%BUILD_MATLAB%"=="Y" (
+ECHO matlab_toolbox='y' >> cantera.conf
+ECHO matlab_path='%CD%/../mw_headers' >> cantera.conf
+) ELSE (
 ECHO matlab_toolbox='n' >> cantera.conf
+)
 ECHO debug='n' >> cantera.conf
 ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf

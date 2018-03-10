@@ -10,10 +10,13 @@ build_script:
   - cmd: call build.bat
 
 environment:
+  GIT_PW:
+    secure: ZDKGbBpWbzWubzWcf909xg==
   matrix:
     - PYTHON_LOC: C:\Python27
       PY_VER: 2.7
       BUILD_ARCH: 32
+      BUILD_MATLAB: Y
     - PYTHON_LOC: C:\Python36
       PY_VER: 3.6
       BUILD_ARCH: 32
