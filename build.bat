@@ -32,7 +32,7 @@ ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
 
 SET "ESC_PREFIX=%PREFIX:\=/%"
-ECHO boost_inc_dir="%ESC_PREFIX%/Library/include" >> cantera.conf
+ECHO boost_inc_dir="C:/Libraries/boost" >> cantera.conf
 
 CALL scons build -j%CPU_USE% python_package=y python_cmd="%PYTHON%"
 CALL scons msi
