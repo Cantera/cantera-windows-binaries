@@ -1,6 +1,6 @@
 @ECHO off
 
-IF %ARCH% EQU 64 (
+IF %BUILD_ARCH% EQU 64 (
    CALL "%VS140COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
 ) ELSE (
    CALL "%VS140COMNTOOLS%"\..\..\VC\bin\vcvars32.bat

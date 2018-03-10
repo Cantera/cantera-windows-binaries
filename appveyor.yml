@@ -13,7 +13,10 @@ environment:
   matrix:
     - PYTHON_LOC: C:\Python27
       PY_VER: 2.7
+      BUILD_ARCH: 32
     - PYTHON_LOC: C:\Python36
       PY_VER: 3.6
+      BUILD_ARCH: 32
     - PYTHON_LOC: C:\Python36-x64
       PY_VER: 3.6
+      BUILD_ARCH: 64
