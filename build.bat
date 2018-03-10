@@ -36,3 +36,5 @@ ECHO boost_inc_dir="C:/Libraries/boost" >> cantera.conf
 
 CALL scons build -j%CPU_USE% python_package=y
 CALL scons msi
+
+dir
