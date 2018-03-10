@@ -1,4 +1,4 @@
-@ECHO off
+:: @ECHO off
 
 IF %BUILD_ARCH% EQU 64 (
    CALL "%VS140COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
@@ -14,8 +14,7 @@ IF %PY_MAJ_VER% EQU 2 (
 )
 
 :: Set the number of CPUs to use in building
-SET /A CPU_USE=%CPU_COUNT% / 2
-IF %CPU_USE% EQU 0 SET CPU_USE=1
+SET CPU_USE=2
 
 git clone https://github.com/Cantera/cantera.git
 cd cantera
