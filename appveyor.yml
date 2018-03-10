@@ -9,7 +9,26 @@ build_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - cmd: call build.bat
 
+artifacts:
+  - path: 'cantera\*.msi'
+    type: File
+
+deploy:
+  release: v$(CT_VERSION)
+  description: 'Cantera $(CT_VERSION)'
+  provider: GitHub
+  auth_token:
+    secure: XzTEspXrLNiDQJs4mtdMB/dI2QdtPQ2iIMxfS9aQ24C6jXDIVS0DMjL0PbwWpZsN
+  artifact: /cantera/.*.msi/
+  draft: true
+  prerelease: true
+  force_update: true
+  on:
+    branch: master
+    appveyor_repo_tag: false
+
 environment:
+  CT_VERSION: 2.4.0b1
   GIT_PW:
     secure: ZDKGbBpWbzWubzWcf909xg==
   matrix:

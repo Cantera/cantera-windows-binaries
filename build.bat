@@ -2,8 +2,10 @@
 
 IF %BUILD_ARCH% EQU 64 (
    CALL "%VS140COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
+   SET ARCH_NAME="x64"
 ) ELSE (
    CALL "%VS140COMNTOOLS%"\..\..\VC\bin\vcvars32.bat
+   SET ARCH_NAME="x86"
 )
 
 :: The major version of Python being used
@@ -46,3 +48,10 @@ CALL scons build -j%CPU_USE% python_package=y
 CALL scons msi
 
 dir
+
+if "%BUILD_MATLAB%"=="Y" (
+move cantera.msi "Cantera-%CT_VERSION%-%ARCH_NAME%.msi"
+) ELSE (
+:: Only want cantera.msi from the build that includes the Matlab toolbox
+del cantera.msi
+)
