@@ -1,0 +1,19 @@
+version: 1.0.{build}
+
+install:
+  - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
+  - cmd: pip install --egg scons
+  - cmd: pip install numpy cython
+
+build_script:
+  - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
+  - cmd: call build.bat
+
+environment:
+  matrix:
+    - PYTHON_LOC: C:\Python27
+      PY_VER: 2.7
+    - PYTHON_LOC: C:\Python36
+      PY_VER: 3.6
+    - PYTHON_LOC: C:\Python36-x64
+      PY_VER: 3.6
