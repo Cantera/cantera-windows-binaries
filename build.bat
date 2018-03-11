@@ -1,5 +1,3 @@
-:: @ECHO off
-
 IF %BUILD_ARCH% EQU 64 (
    CALL "%VS140COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
    SET ARCH_NAME="x64"
@@ -48,6 +46,12 @@ CALL scons build -j%CPU_USE% python_package=y
 CALL scons msi
 
 dir
+
+IF %BUILD_ARCH% EQU 64 (
+   move Cantera-%CT_VERSION%.win-amd64-py%PY_VER%.msi Cantera-Python-%CT_VERSION%-x64-py%PY_VER%.msi
+) ELSE (
+   move Cantera-%CT_VERSION%.win32-py%PY_VER%.msi Cantera-Python-%CT_VERSION%-x86-py%PY_VER%.msi
+)
 
 if "%BUILD_MATLAB%"=="Y" (
 move cantera.msi "Cantera-%CT_VERSION%-%ARCH_NAME%.msi"
