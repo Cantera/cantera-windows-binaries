@@ -14,8 +14,8 @@ artifacts:
     type: File
 
 deploy:
-  release: v$(CT_VERSION)
-  description: 'Cantera $(CT_VERSION)'
+  release: 'Cantera $(CT_VERSION)'
+  description: 'Binaries uploaded by AppVeyor, build $(appveyor_build_version)'
   provider: GitHub
   auth_token:
     secure: XzTEspXrLNiDQJs4mtdMB/dI2QdtPQ2iIMxfS9aQ24C6jXDIVS0DMjL0PbwWpZsN
