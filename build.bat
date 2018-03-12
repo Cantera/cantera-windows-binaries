@@ -11,6 +11,7 @@ SET PY_MAJ_VER=%PY_VER:~0,1%
 
 IF %PY_MAJ_VER% EQU 2 (
    CALL pip install 3to2
+   CALL %PYTHON3_LOC%\Scripts\pip install numpy==1.11.3
 )
 
 :: Set the number of CPUs to use in building
@@ -39,6 +40,11 @@ ECHO debug='n' >> cantera.conf
 ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
 
+IF %PY_MAJ_VER% EQU 2 (
+    ECHO python3_cmd='%PYTHON3_LOC%/python.exe' >> cantera.conf
+    ECHO python3_package='y' >> cantera.conf
+)
+
 SET "ESC_PREFIX=%PREFIX:\=/%"
 ECHO boost_inc_dir="C:/Libraries/boost" >> cantera.conf
 
@@ -49,8 +55,14 @@ dir
 
 IF %BUILD_ARCH% EQU 64 (
    move Cantera-%CT_VERSION%.win-amd64-py%PY_VER%.msi Cantera-Python-%CT_VERSION%-x64-py%PY_VER%.msi
+   IF %PY_MAJ_VER% EQU 2 (
+      move Cantera-%CT_VERSION%.win-amd64-py3.4.msi Cantera-Python-%CT_VERSION%-x64-py3.4.msi
+   )
 ) ELSE (
    move Cantera-%CT_VERSION%.win32-py%PY_VER%.msi Cantera-Python-%CT_VERSION%-x86-py%PY_VER%.msi
+   IF %PY_MAJ_VER% EQU 2 (
+      move Cantera-%CT_VERSION%.win32-py3.4.msi Cantera-Python-%CT_VERSION%-x86-py3.4.msi
+   )
 )
 
 if "%BUILD_MATLAB%"=="Y" (
