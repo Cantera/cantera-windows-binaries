@@ -2,7 +2,7 @@ version: 1.0.{build}
 
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - cmd: pip install --egg scons
+  - cmd: pip install scons
   - cmd: pip install numpy==1.14.5 cython
 
 build_script:
