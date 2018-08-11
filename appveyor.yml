@@ -43,6 +43,9 @@ environment:
     - PYTHON_LOC: C:\Python36
       PY_VER: 3.6
       BUILD_ARCH: 32
+    - PYTHON_LOC: C:\Python37
+      PY_VER: 3.7
+      BUILD_ARCH: 32
     - PYTHON_LOC: C:\Python27-x64
       PYTHON3_LOC: C:\Python34-x64
       PY_VER: 2.7
@@ -53,4 +56,7 @@ environment:
       BUILD_ARCH: 64
     - PYTHON_LOC: C:\Python36-x64
       PY_VER: 3.6
+      BUILD_ARCH: 64
+    - PYTHON_LOC: C:\Python37-x64
+      PY_VER: 3.7
       BUILD_ARCH: 64
