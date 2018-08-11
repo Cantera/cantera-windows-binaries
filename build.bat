@@ -11,7 +11,7 @@ SET PY_MAJ_VER=%PY_VER:~0,1%
 
 IF %PY_MAJ_VER% EQU 2 (
    CALL pip install 3to2
-   CALL %PYTHON3_LOC%\Scripts\pip install numpy==1.11.3
+   CALL %PYTHON3_LOC%\Scripts\pip install numpy==1.14.5
 )
 
 :: Set the number of CPUs to use in building
