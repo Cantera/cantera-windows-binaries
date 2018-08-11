@@ -46,7 +46,7 @@ IF %PY_MAJ_VER% EQU 2 (
 )
 
 SET "ESC_PREFIX=%PREFIX:\=/%"
-ECHO boost_inc_dir="C:/Libraries/boost" >> cantera.conf
+ECHO boost_inc_dir="C:/Libraries/boost_1_67_0" >> cantera.conf
 
 CALL scons build -j%CPU_USE% python_package=y
 CALL scons msi
