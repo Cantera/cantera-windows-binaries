@@ -28,7 +28,7 @@ deploy:
     appveyor_repo_tag: false
 
 environment:
-  CT_VERSION: 2.4.0b1
+  CT_VERSION: 2.4.0b2
   GIT_PW:
     secure: ZDKGbBpWbzWubzWcf909xg==
   matrix:
