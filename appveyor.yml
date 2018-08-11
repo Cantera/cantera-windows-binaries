@@ -2,7 +2,7 @@ version: 1.0.{build}
 
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - cmd: pip install --no-cache-dir --upgrade pip
+  - cmd: python -m pip install --no-cache-dir --upgrade pip
   - cmd: pip install --upgrade setuptools
   - cmd: pip install --upgrade --no-warn-script-location wheel
   - cmd: pip install scons
