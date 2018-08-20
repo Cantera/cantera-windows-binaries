@@ -32,9 +32,13 @@ deploy:
 
 environment:
   CT_VERSION: 2.4.0b2
+  CANTERA_TAG: testing
   GIT_PW:
     secure: ZDKGbBpWbzWubzWcf909xg==
   matrix:
+    - PYTHON_LOC: C:\Python37-x64
+      PY_VER: 3.7
+      BUILD_ARCH: 64
     - PYTHON_LOC: C:\Python27
       PYTHON3_LOC: C:\Python35
       PY_VER: 2.7
@@ -53,7 +57,4 @@ environment:
       BUILD_MATLAB: Y
     - PYTHON_LOC: C:\Python36-x64
       PY_VER: 3.6
-      BUILD_ARCH: 64
-    - PYTHON_LOC: C:\Python37-x64
-      PY_VER: 3.7
       BUILD_ARCH: 64
