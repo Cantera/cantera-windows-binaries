@@ -22,7 +22,7 @@ git clone https://cantera:%GIT_PW%@cantera.org/mw_headers.git
 )
 git clone https://github.com/Cantera/cantera.git
 cd cantera
-git checkout %CANTERA_TAG%
+git checkout %GIT_COMMIT%
 
 :: Have to use CALL to prevent the script from exiting after calling SCons
 CALL scons clean
