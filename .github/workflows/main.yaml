@@ -53,7 +53,7 @@ jobs:
         run: build.bat
         env:
           BUILD_ARCH: ${{ matrix.arch }}
-          MATLAB: ${{ matrix.MATLAB }}
+          BUILD_MATLAB: ${{ matrix.MATLAB }}
           PY_VER: ${{ matrix.python-version }}
         shell: cmd
       - name: Upload the MSI artifact
