@@ -34,6 +34,7 @@ jobs:
           submodules: recursive
           repository: Cantera/cantera
           path: cantera
+          ref: main
       - name: Get the MATLAB headers
         if: matrix.MATLAB == 'Y'
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
