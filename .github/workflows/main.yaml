@@ -1,0 +1,61 @@
+name: Build MSI
+on:
+  push:
+    branches:
+      - main
+
+env:
+  MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
+  CT_VERSION: "2.5.0"
+
+jobs:
+  build-python:
+    name: Python ${{ matrix.python-version }} on ${{ matrix.arch }}
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: [ '3.6', '3.7', '3.8' ]
+        arch: ['x86', 'x64']
+        MATLAB: ["N"]
+      include:
+        - python-version: '3.5'
+          arch: 'x86'
+          MATLAB: "Y"
+        - python-version: '3.5'
+          arch: 'x64'
+          MATLAB: "Y"
+      fail-fast: false
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v2
+      - name: Checkout the Cantera repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          repository: Cantera/cantera
+          path: cantera
+      - name: Get the MATLAB headers
+        if: matrix.MATLAB == "Y"
+        run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
+        env:
+          GIT_PW: ${{ secrets.GIT_PW }}
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.arch }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install -U pip setuptools
+          python -m pip install scons pypiwin32 numpy ruamel.yaml cython
+      - name: Build Cantera
+        run: build.bat
+        env:
+          BUILD_ARCH: ${{ matrix.arch }}
+          MATLAB: ${{ matrix.MATLAB }}
+          PY_VER: ${{ matrix.python-version }}
+        shell: cmd
+      - name: Upload the MSI artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: '**/*.msi'
