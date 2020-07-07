@@ -17,13 +17,13 @@ jobs:
         python-version: [ '3.6', '3.7', '3.8' ]
         arch: ['x86', 'x64']
         MATLAB: ["N"]
-      include:
-        - python-version: '3.5'
-          arch: 'x86'
-          MATLAB: "Y"
-        - python-version: '3.5'
-          arch: 'x64'
-          MATLAB: "Y"
+        include:
+          - python-version: '3.5'
+            arch: 'x86'
+            MATLAB: "Y"
+          - python-version: '3.5'
+            arch: 'x64'
+            MATLAB: "Y"
       fail-fast: false
     steps:
       - name: Checkout this repository
