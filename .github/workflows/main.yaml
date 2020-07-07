@@ -35,7 +35,7 @@ jobs:
           repository: Cantera/cantera
           path: cantera
       - name: Get the MATLAB headers
-        if: matrix.MATLAB == "Y"
+        if: matrix.MATLAB == Y
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
         env:
           GIT_PW: ${{ secrets.GIT_PW }}
