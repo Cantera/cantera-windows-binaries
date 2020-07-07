@@ -10,8 +10,9 @@ CALL scons clean
 :: compile the interface.
 ECHO msvc_version='14.2' >> cantera.conf
 IF "%BUILD_MATLAB%"=="Y" (
+SET "ESC_MATLAB=%MW_HEADERS_DIR:\=/%"
 ECHO matlab_toolbox='y' >> cantera.conf
-ECHO matlab_path='%MW_HEADERS_DIR%' >> cantera.conf
+ECHO matlab_path='%ESC_MATLAB%' >> cantera.conf
 ) ELSE (
 ECHO matlab_toolbox='n' >> cantera.conf
 )
