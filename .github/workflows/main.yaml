@@ -6,7 +6,7 @@ on:
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
-  CT_VERSION: "2.5.0"
+  CT_VERSION: "2.5.0a4"
 
 jobs:
   build-python:
@@ -59,4 +59,4 @@ jobs:
       - name: Upload the MSI artifact
         uses: actions/upload-artifact@v2
         with:
-          path: '**/*.msi'
+          path: 'cantera/*.msi'

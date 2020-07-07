@@ -35,6 +35,7 @@ IF "%BUILD_ARCH%"=="x64" (
 ) ELSE (
    move Cantera-%CT_VERSION%.win32-py%PY_VER%.msi Cantera-Python-%CT_VERSION%-x86-py%PY_VER%.msi
 )
+IF ERRORLEVEL 1 EXIT 1
 
 if "%BUILD_MATLAB%"=="Y" (
 move cantera.msi "Cantera-%CT_VERSION%-%BUILD_ARCH%.msi"
@@ -42,3 +43,4 @@ move cantera.msi "Cantera-%CT_VERSION%-%BUILD_ARCH%.msi"
 :: Only want cantera.msi from the build that includes the Matlab toolbox
 del cantera.msi
 )
+IF ERRORLEVEL 1 EXIT 1
