@@ -20,7 +20,7 @@ ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
 ECHO python_package='full' >> cantera.conf
 
-ECHO boost_inc_dir="%BOOST_ROOT_1_69_0%" >> cantera.conf
+ECHO boost_inc_dir="%BOOST_ROOT_1_72_0%" >> cantera.conf
 
 CALL scons build -j%CPU_USE% VERBOSE=y
 IF %ERRORLEVEL% 1 EXIT 1
