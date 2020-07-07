@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-python:
-    name: Python ${{ matrix.python-version }} on ${{ matrix.arch }} with MATLAB=${{ matrix.MATLAB }}
+    name: Py${{ matrix.python-version }} on ${{ matrix.arch }}, MATLAB=${{ matrix.MATLAB }}
     runs-on: windows-latest
     strategy:
       matrix:

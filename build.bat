@@ -9,8 +9,9 @@ CALL scons clean
 :: Put important settings into cantera.conf for the build. Use VS 2019 to
 :: compile the interface.
 ECHO msvc_version='14.2' >> cantera.conf
-IF "%BUILD_MATLAB%"=="Y" (
 SET "ESC_MATLAB=%MW_HEADERS_DIR:\=/%"
+ECHO %ESC_MATLAB%
+IF "%BUILD_MATLAB%"=="Y" (
 ECHO matlab_toolbox='y' >> cantera.conf
 ECHO matlab_path="%ESC_MATLAB%" >> cantera.conf
 ) ELSE (
