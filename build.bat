@@ -24,9 +24,9 @@ SET "ESC_BOOST=%BOOST_ROOT_1_72_0:\=/%"
 ECHO boost_inc_dir="%ESC_BOOST%" >> cantera.conf
 
 CALL scons build -j%CPU_USE% VERBOSE=y
-IF %ERRORLEVEL% 1 EXIT 1
+IF ERRORLEVEL 1 EXIT 1
 CALL scons msi
-IF %ERRORLEVEL% 1 EXIT 1
+IF ERRORLEVEL 1 EXIT 1
 
 dir
 
