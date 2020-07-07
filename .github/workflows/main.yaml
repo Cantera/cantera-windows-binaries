@@ -16,14 +16,14 @@ jobs:
       matrix:
         python-version: [ '3.6', '3.7', '3.8' ]
         arch: ['x86', 'x64']
-        MATLAB: ["N"]
+        MATLAB: ['N']
         include:
           - python-version: '3.5'
             arch: 'x86'
-            MATLAB: "Y"
+            MATLAB: 'Y'
           - python-version: '3.5'
             arch: 'x64'
-            MATLAB: "Y"
+            MATLAB: 'Y'
       fail-fast: false
     steps:
       - name: Checkout this repository
@@ -35,7 +35,7 @@ jobs:
           repository: Cantera/cantera
           path: cantera
       - name: Get the MATLAB headers
-        if: matrix.MATLAB == Y
+        if: matrix.MATLAB == 'Y'
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
         env:
           GIT_PW: ${{ secrets.GIT_PW }}
