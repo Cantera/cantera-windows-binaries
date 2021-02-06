@@ -6,7 +6,7 @@ on:
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
-  CT_VERSION: "2.5.0a4"
+  CT_VERSION: "2.5.0rc1"
 
 jobs:
   build-python:
@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: [ '3.6', '3.7', '3.8' ]
+        python-version: [ '3.6', '3.7', '3.8', '3.9' ]
         arch: ['x86', 'x64']
         MATLAB: ['N']
         include:
