@@ -6,7 +6,7 @@ on:
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
-  CT_VERSION: "2.5.0rc1"
+  CT_VERSION: "2.5.0"
 
 jobs:
   build-python:
@@ -34,7 +34,7 @@ jobs:
           submodules: recursive
           repository: Cantera/cantera
           path: cantera
-          ref: 'v2.5.0rc1'
+          ref: 'v2.5.0'
       - name: Get the MATLAB headers
         if: matrix.MATLAB == 'Y'
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
