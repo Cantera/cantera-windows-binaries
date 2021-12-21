@@ -26,6 +26,9 @@ jobs:
           repository: Cantera/cantera
           path: cantera
           ref: main
+      - name: Install rsync
+        run: choco install rsync
+        shell: pwsh
       # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
       # machine that has previously logged in to cantera.org and trusts
       # that it logged in to the right machine
@@ -36,7 +39,7 @@ jobs:
           known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
       - name: Get the MATLAB headers
         run: "rsync -avzP ctdeploy@cantera.org:/home/ctdeploy/mw_headers/ ${MW_HEADERS_DIR}"
-        shell: bash
+        shell: pwsh
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
