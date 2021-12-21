@@ -11,16 +11,12 @@ CALL scons clean
 ECHO msvc_version='14.2' >> cantera.conf
 SET "ESC_MATLAB=%MW_HEADERS_DIR:\=/%"
 ECHO %ESC_MATLAB%
-IF "%BUILD_MATLAB%"=="Y" (
 ECHO matlab_toolbox='y' >> cantera.conf
 ECHO matlab_path="%ESC_MATLAB%" >> cantera.conf
-) ELSE (
-ECHO matlab_toolbox='n' >> cantera.conf
-)
 ECHO debug='n' >> cantera.conf
 ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
-ECHO python_package='full' >> cantera.conf
+ECHO python_package='none' >> cantera.conf
 
 SET "ESC_BOOST=%BOOST_ROOT_1_72_0:\=/%"
 ECHO boost_inc_dir="%ESC_BOOST%" >> cantera.conf
@@ -32,17 +28,5 @@ IF ERRORLEVEL 1 EXIT 1
 
 dir
 
-IF "%BUILD_ARCH%"=="x64" (
-   move Cantera-%CT_VERSION%.win-amd64-py%PY_VER%.msi Cantera-Python-%CT_VERSION%-x64-py%PY_VER%.msi
-) ELSE (
-   move Cantera-%CT_VERSION%.win32-py%PY_VER%.msi Cantera-Python-%CT_VERSION%-x86-py%PY_VER%.msi
-)
-IF ERRORLEVEL 1 EXIT 1
-
-if "%BUILD_MATLAB%"=="Y" (
-move cantera.msi "Cantera-%CT_VERSION%-%BUILD_ARCH%.msi"
-) ELSE (
-:: Only want cantera.msi from the build that includes the Matlab toolbox
-del cantera.msi
-)
+move cantera.msi "Cantera-%BUILD_ARCH%.msi"
 IF ERRORLEVEL 1 EXIT 1
