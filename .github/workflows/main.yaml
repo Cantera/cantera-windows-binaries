@@ -3,27 +3,18 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
-  CT_VERSION: "2.5.0rc1"
 
 jobs:
   build-python:
-    name: Py${{ matrix.python-version }} on ${{ matrix.arch }}, MATLAB=${{ matrix.MATLAB }}
+    name: Build Matlab Package on ${{ matrix.arch }}
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: [ '3.6', '3.7', '3.8', '3.9' ]
         arch: ['x86', 'x64']
-        MATLAB: ['N']
-        include:
-          - python-version: '3.5'
-            arch: 'x86'
-            MATLAB: 'Y'
-          - python-version: '3.5'
-            arch: 'x64'
-            MATLAB: 'Y'
       fail-fast: false
     steps:
       - name: Checkout this repository
@@ -35,16 +26,22 @@ jobs:
           repository: Cantera/cantera
           path: cantera
           ref: main
+      # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
+      # machine that has previously logged in to cantera.org and trusts
+      # that it logged in to the right machine
+      - name: Set up SSH key and host for deploy
+        if: matrix.MATLAB == 0
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.CTDEPLOY_SSH_KEY }}
+          known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
       - name: Get the MATLAB headers
-        if: matrix.MATLAB == 'Y'
-        run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
-        env:
-          GIT_PW: ${{ secrets.GIT_PW }}
+        run: git clone ssh://ctdeploy@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
         shell: bash
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.9"
           architecture: ${{ matrix.arch }}
       - name: Install Python dependencies
         run: |
@@ -54,8 +51,6 @@ jobs:
         run: build.bat
         env:
           BUILD_ARCH: ${{ matrix.arch }}
-          BUILD_MATLAB: ${{ matrix.MATLAB }}
-          PY_VER: ${{ matrix.python-version }}
         shell: cmd
       - name: Upload the MSI artifact
         uses: actions/upload-artifact@v2
