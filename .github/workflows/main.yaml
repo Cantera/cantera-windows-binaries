@@ -18,7 +18,10 @@ env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
 
 jobs:
-  build-python:
+  build-msi:
+    env:
+      BOOST_ROOT: ${{github.workspace}}/3rdparty/boost
+      BOOST_URL: https://pilotfiber.dl.sourceforge.net/project/boost/boost/1.75.0/boost_1_75_0.7z
     name: Build Matlab Package on ${{ matrix.arch }}
     runs-on: windows-latest
     strategy:
@@ -35,6 +38,23 @@ jobs:
           repository: Cantera/cantera
           path: cantera
           ref: ${{ github.event.inputs.incoming_ref }}
+      - name: Restore Boost cache
+        uses: actions/cache@v2
+        id: cache-boost
+        with:
+          path: ${{ env.BOOST_ROOT }}
+          key: boost
+
+      - name: Install Boost Headers
+        if: steps.cache-boost.outputs.cache-hit != 'true'
+        run: |
+          BOOST_ROOT=$(echo $BOOST_ROOT | sed 's/\\/\//g')
+          mkdir -p $BOOST_ROOT
+          curl --progress-bar --location --output $BOOST_ROOT/download.7z $BOOST_URL
+          7z -o$BOOST_ROOT x $BOOST_ROOT/download.7z -y -bd boost_1_75_0/boost
+          mv $BOOST_ROOT/boost_1_75_0/boost $BOOST_ROOT/boost
+          rm $BOOST_ROOT/download.7z
+        shell: bash
       # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
       # machine that has previously logged in to cantera.org and trusts
       # that it logged in to the right machine
@@ -79,11 +99,6 @@ jobs:
         run: |
           python -m pip install -U pip setuptools
           python -m pip install scons pypiwin32 numpy ruamel.yaml cython
-      - name: Set up MSVC
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: "${{ matrix.arch }}"
-          toolset: "14.2"
       - name: Build Cantera
         run: build.bat
         env:
