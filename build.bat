@@ -6,9 +6,9 @@ cd cantera
 :: Have to use CALL to prevent the script from exiting after calling SCons
 CALL scons clean
 
-:: Put important settings into cantera.conf for the build. Use VS 2019 to
+:: Put important settings into cantera.conf for the build. Use VS 2022 to
 :: compile the interface.
-ECHO msvc_version='14.2' >> cantera.conf
+ECHO msvc_version='14.3' >> cantera.conf
 SET "ESC_MATLAB=%MW_HEADERS_DIR:\=/%"
 ECHO %ESC_MATLAB%
 ECHO matlab_toolbox='y' >> cantera.conf
