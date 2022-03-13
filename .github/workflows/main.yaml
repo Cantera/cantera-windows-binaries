@@ -21,7 +21,7 @@ jobs:
   build-msi:
     env:
       BOOST_ROOT: ${{github.workspace}}/3rdparty/boost
-      BOOST_URL: https://pilotfiber.dl.sourceforge.net/project/boost/boost/1.75.0/boost_1_75_0.7z
+      BOOST_URL: https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
     name: Build Matlab Package on ${{ matrix.arch }}
     runs-on: windows-latest
     strategy:
