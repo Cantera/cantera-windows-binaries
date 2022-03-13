@@ -3,6 +3,12 @@ SET CPU_USE=2
 
 cd cantera
 
+IF %BUILD_ARCH% EQU "x64" (
+	CALL "%VS142COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
+) ELSE (
+	CALL "%VS142COMNTOOLS%"\..\..\VC\bin\vcvars32.bat
+)
+
 :: Have to use CALL to prevent the script from exiting after calling SCons
 CALL scons clean
 
