@@ -16,9 +16,42 @@ concurrency:
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
+  ACTION_URL: "https://github.com/Cantera/cantera-windows-binaries/actions/runs/${{ github.run_id }}"
+  INCOMING_REF: ${{ github.event.inputs.incoming_ref }}
 
 jobs:
+  post-pending-status:
+    name: Post a pending workflow status to Cantera/cantera
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
+    outputs:
+      incoming-sha: ${{ steps.set-the-status.outputs.incoming-sha }}
+    steps:
+      - name: Post the status to the upstream commit
+        id: set-the-status
+        run: |
+          INCOMING_REF="${{ github.event.inputs.incoming_ref }}"
+          if [[ "$INCOMING_REF" == *"refs/"* ]]; then
+            INCOMING_REF=${INCOMING_REF/refs\//}
+          fi
+          INCOMING_SHA=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
+                -H "Accept: application/vnd.github.v3+json" --jq ".[0].object.sha")
+          echo "INCOMING_SHA=${INCOMING_SHA}" >> $GITHUB_ENV
+          gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
+            -H "Accept: application/vnd.github.v3+json" \
+            --field state='pending' \
+            --field target_url=$ACTION_URL \
+            --field context='Conda Package Build' \
+            --field description="Pending build" \
+            --silent
+          echo "::set-output name=incoming-sha::${INCOMING_SHA}"
+
   build-msi:
+    outputs:
+      job-status: ${{ job.status }}
+    needs:
+      - "post-pending-status"
     env:
       BOOST_ROOT: ${{github.workspace}}/3rdparty/boost
       BOOST_URL: https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
@@ -108,3 +141,31 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: 'cantera/*.msi'
+
+  send_status_to_cantera:
+    name: Send jobs status to Cantera/cantera
+    runs-on: ubuntu-20.04
+    needs:
+      - "post-pending-status"
+      - "build-msi"
+    if: always()
+    steps:
+      - name: Post the status to the upstream commit
+        run: |
+          INCOMING_SHA=${{ needs.post-pending-status.outputs.incoming-sha }}
+          OVERALL_STATUS=${{ needs.build-msi.outputs.job-status }}
+          if [ "$OVERALL_STATUS" == "success" ]; then
+            DESCRIPTION="succeeded"
+          elif [ "$OVERALL_STATUS" == "failure" ]; then
+            DESCRIPTION="failed"
+          else
+            DESCRIPTION="$OVERALL_STATUS"
+          gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
+            -H "Accept: application/vnd.github.v3+json" \
+            --field state="${OVERALL_STATUS}" \
+            --field target_url=$ACTION_URL \
+            --field context='Windows MSI Package Build' \
+            --field description="Building MSI ${DESCRIPTION}." \
+            --silent
+        env:
+          GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
