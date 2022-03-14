@@ -42,7 +42,7 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             --field state='pending' \
             --field target_url=$ACTION_URL \
-            --field context='Conda Package Build' \
+            --field context='Windows MSI Package Build' \
             --field description="Pending build" \
             --silent
           echo "::set-output name=incoming-sha::${INCOMING_SHA}"
