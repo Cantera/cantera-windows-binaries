@@ -160,6 +160,7 @@ jobs:
             DESCRIPTION="failed"
           else
             DESCRIPTION="$OVERALL_STATUS"
+          fi
           gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
             -H "Accept: application/vnd.github.v3+json" \
             --field state="${OVERALL_STATUS}" \
