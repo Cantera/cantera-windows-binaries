@@ -28,5 +28,5 @@ IF ERRORLEVEL 1 EXIT 1
 
 dir
 
-move cantera.msi "Cantera-%BUILD_ARCH%.msi"
+move cantera.msi "Cantera-x64.msi"
 IF ERRORLEVEL 1 EXIT 1

@@ -81,12 +81,8 @@ jobs:
     env:
       BOOST_ROOT: ${{github.workspace}}/3rdparty/boost
       BOOST_URL: https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
-    name: Build Matlab Package on ${{ matrix.arch }}
+    name: Build Matlab Package for Windows
     runs-on: windows-latest
-    strategy:
-      matrix:
-        arch: ['x86', 'x64']
-      fail-fast: false
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v2
@@ -153,15 +149,12 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.9"
-          architecture: ${{ matrix.arch }}
       - name: Install Python dependencies
         run: |
           python -m pip install -U pip setuptools
           python -m pip install scons pypiwin32 numpy ruamel.yaml cython
       - name: Build Cantera
         run: build.bat
-        env:
-          BUILD_ARCH: ${{ matrix.arch }}
         shell: cmd
       - name: Upload the MSI artifact
         uses: actions/upload-artifact@v2
