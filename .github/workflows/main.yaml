@@ -85,16 +85,16 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout this repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Checkout the Cantera repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
           repository: Cantera/cantera
           path: cantera
           ref: ${{ github.event.inputs.incoming_ref }}
       - name: Restore Boost cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: cache-boost
         with:
           path: ${{ env.BOOST_ROOT }}
@@ -146,7 +146,7 @@ jobs:
           ctdeploy@cantera.org:. $Env:CYG_MW_HEADERS_DIR
         shell: powershell
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "3.9"
       - name: Install Python dependencies
@@ -157,7 +157,7 @@ jobs:
         run: build.bat
         shell: cmd
       - name: Upload the MSI artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           path: 'cantera/*.msi'
 
