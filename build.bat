@@ -21,7 +21,7 @@ ECHO python_package='none' >> cantera.conf
 SET "ESC_BOOST=%BOOST_ROOT:\=/%"
 ECHO boost_inc_dir="%ESC_BOOST%" >> cantera.conf
 
-CALL scons build -j%CPU_USE% VERBOSE=y
+CALL scons build -j%CPU_USE% logging=debug
 IF ERRORLEVEL 1 EXIT 1
 CALL scons msi
 IF ERRORLEVEL 1 EXIT 1
